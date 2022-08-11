@@ -8,7 +8,16 @@ var choiceA = document.querySelector("#btn0");
 var choiceB = document.querySelector("#btn1");
 var choiceC = document.querySelector("#btn2");
 var answerCheck = document.querySelector("#answer-check");
-var highScores = document.querySelector("#high-scores");
+var results = document.querySelector("#results");
+var scoresDiv = document.querySelector("#scores-screen");
+var scoresList = document.querySelector("#scores-list");
+var finalScore = document.querySelector("#final-score");
+var initialInput = document.querySelector("#initial-box");
+var submitInitialsBtn = document.querySelector("#enter-initials");
+var goBackBtn = document.querySelector("#go-back");
+var clearScoresBtn = document.querySelector("#clear-scores");
+var viewScores = document.querySelector("#view-scores");
+var listOfScores = document.querySelector("#scores-list");
 
 var correctAns = 0;
 var questionArray = 0;
@@ -33,14 +42,21 @@ const questions = [
         question: "Which type of conditional statement would I use to specify a new condition to test, if the first condition is false?",
         choices: ["a. switch", "b. else", "c. else if"],
         answer: "c. else if"
+    },
+    {
+        question: "What do you call a function running in parallel with other functions?",
+        choices: ["a. callback", "b. relay", "c.asynchronous"],
+        answer: "c. asynchronous"
     }
 ];
 
-var totalTime = 60;
+var totalTime = 75;
 function startQuiz() {
     intro.style.display = "none";
+    quiz.style.display = "block";
+    results.style.display = "none";
     questionArray = 0;
-    totalTime = 60;
+    totalTime = 75;
     timeLeft.textContent = totalTime;
     var startTimer = setInterval(function() {
         totalTime--;
@@ -98,13 +114,69 @@ function chooseC() {
 }
 
 function gameOver() {
+    results.style.display= "block";
+    quiz.style.display = "none";
     finalScore.textContent = correctAns;
 }
+
+function storeScores(event) {
+    scoresDiv.style.display = "block";
+    var savedScores = localStorage.getitem("scores");
+    var scoresArray;
+    if (savedScores === null) {
+        scoresArray = [];
+    } 
+    else {
+        scoresArray = JSON.parse(savedScores)
+    }
+    var userScore = {
+        initials: initialInput.value,
+        score: finalScore.textContent
+    };
+    console.log(userScore);
+    scoresArray.push(userScore);
+    var scoresArrayString = JSON.stringify(scoresArray);
+    window.localStorage.setItem("scores", scoresArrayString);
+    showScores();
+}
+
+var i = 0;
+function showScores() {
+    intro.style.display = "none";
+    quiz.style.display = "none";
+    scoresDiv.style.display = "block";
+    results.style.display = "none";
+    var savedScores = localStorage.getItem("scores");
+    if (savedScores === null) {
+        return;
+    }
+    var storedScores = JSON.parse(savedScores);
+    for (; i < storedScores.length; i++) {
+        var eachNewScore = document.createElement("p");
+        eachNewScore.innerHTML = storedScores[i].initials + ": " + storedScores[i].score;
+        listOfScores.appendChild(eachNewScore);
+    }
+}
+
+
 
 startQuizBtn.addEventListener("click", startQuiz);
 choiceA.addEventListener("click", chooseA);
 choiceB.addEventListener("click", chooseB);
 choiceC.addEventListener("click", chooseC);
+submitInitialsBtn.addEventListener("click", function(event) {
+    storeScores(event);
+});
+viewScores.addEventListener("click", function(event) {
+    showScores(event);
+});
+goBackBtn.addEventListener("click", function() {
+    intro.style.display = "block";
+    scoresDiv.style.display = "none";
+});
+clearScoresBtn.addEventListener("click", function() {
+    window.localStorage.removeItem("scores");
+});
 
 
 

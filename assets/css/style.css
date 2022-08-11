@@ -16,6 +16,11 @@ header {
     padding: 25px 50px 25px 50px;
 }
 
+#view-scores:hover {
+    color: black;
+    cursor: pointer;
+}
+
 main {
     justify-content: center;
     display: flex;

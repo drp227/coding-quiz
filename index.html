@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <div id="high-scores">View high scores</div>
+        <div id="view-scores">View scores</div>
             <div id="timer">Time:
                 <span id="time-left">0</span>
             </div>
@@ -19,7 +19,9 @@
     <main>
         <div id="intro">
             <h1>Coding Quiz Challenge</h1>
-            <p>Let's test your JavaScript fundamental knowledge!</p>
+            <p>Try to answer the following code-related questions. You have 75 seconds to complete the quiz. But be careful,
+                any question answered incorrectly will get you 10 seconds deducted!
+            </p>
             <button type="button" id="start-quiz-btn">Start Quiz</button>
         </div>
 
@@ -30,14 +32,25 @@
                 <p><button id="btn2"></button></p>
                 <p id="answer-check"></p>
         </div>
+
+        <div id="results" style="display: none;">
+            <h2> Your final score is <span id="final-score"></span></h2>
+            <form>
+                <p> Enter your initials: <input id="initial-box">         
+                <button type="submit" id="enter-initials">Submit</button>
+                </p>
+            </form>
+        </div>
+
+        <div id="scores-screen" style="display: none;">
+            <h2>Scores</h2>
+            <div id="scores-list"></div>
+            <p>
+                <button type="submit" id="go-back">Go Back</button>
+                <button type="submit" id="clear-scores">Clear Scores</button>
+            </p>
+        </div>
     </main>
-
-
-
-        
-
-
-        
 
     <script src="./assets/js/script.js"></script> 
 </body>
